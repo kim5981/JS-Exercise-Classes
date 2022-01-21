@@ -106,7 +106,7 @@ class Car {
 
 const familyCar = new Car ("highlander", 35);
 
-console.log("- TASK 2: ", familyCar.drive(10));
+//console.log("- TASK 2: ", familyCar.drive(10));
 
 /*
   TASK 3
@@ -182,8 +182,8 @@ const brit = new Instructor ({
 });
 
 //console log
-//console.log("- TASK 4: ", brit.demo("Javascript"));
-//console.log("- TASK 4B: ", "BloomTech is pleased to announce that ", brit.grade(kimberly, "the Sprint Challenge")); //access grade() with Brit extended fn
+console.log("- TASK 4: ", brit.demo("Javascript"));
+console.log("- TASK 4B: ", "BloomTech is pleased to announce that ", brit.grade(kimberly, "the Sprint Challenge")); //access grade() with Brit extended fn
 //and input info from object kimberly created above
 
 
