@@ -30,7 +30,7 @@ class Airplane {
 
 /*
   TASK 1
-    - Write a Person class whose constructor initializes `name` and `age` from arguments.
+    - Write a Person class whose constructor initializes `name` and `age` from ****arguments****.
     - All instances of Person should also initialize with an empty `stomach` array.
     - Give instances of Person the ability to `.eat("someFood")`:
         + When eating an edible, it should be pushed into the `stomach`.
@@ -41,9 +41,29 @@ class Airplane {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-class Person {
-  
+class Person { 
+  constructor (name, age) {
+    this.name = name; //initialize name, age
+    this.age = age;
+    this.stomach = []; //initialize stomach, stomach = empty array
+  } //closes constructor
+  eat(food){
+    if (this.stomach.length < 10) {
+      return this.stomach.push(food);
+    }
+  } //closes eat()
+  poop(){
+    return this.stomach = [];
+  } //closes poop()
+  toString(){
+    return `${this.name}, ${this.age}`
+  } //closes toString()
 }
+//create an obj in order to invoke the person class
+const kim = new Person ("kim", "26");
+//console.log(kim.eat());//log obj and function from person class
+//console.log(kim.poop());
+console.log("- TASK 1: ", kim.toString());
 
 /*
   TASK 2
@@ -60,8 +80,29 @@ class Person {
 */
 
 class Car {
-  
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  } //closes constructor()
+  fill(gallons) {
+    //if fuel economy = gal/distance (tank/distance)
+    //or # of mi traveled between filling up and # of gal it took to fill
+    this.tank = this.tank + gallons; //takes the number from gallons and adds it to existing # for tank, that becomes new tank val
+  } //closes fill()
+  drive(distance) { //total mi = current mi + input miles(distance traveled)
+    this.odometer = this.odometer + distance 
+    this.tank = this.tank - (this.milesPerGallon / distance)
+    if(distance > this.tank){
+      return `I ran out of fuel at ${this.odometer} miles!`
+    }
+  } // closes drive()
 }
+
+const familyCar = new Car ("highlander", 35);
+
+console.log("- TASK 2: ", familyCar.drive());
 
 /*
   TASK 3
@@ -76,8 +117,25 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-  
+  constructor(obj){
+    this.name = obj.name;
+    this.age = obj.age;
+    this.location = obj.location;
+  }//closes constructor
+  speak() {
+    return `Hello my name is ${this.name}, I am from ${this.location}`;
+  } //closes speak()
 }
+
+//create object to input to lambdasian/ BloomTechian??
+const kimberly = new Lambdasian ({
+  name: "Kim",
+  age: 26,
+  location: "California"
+});
+
+//console.log to see if it's working
+console.log("- TASK 3: ", kimberly.speak());
 
 /*
   TASK 4
@@ -87,15 +145,46 @@ class Lambdasian {
         + `specialty`: what the instance of Instructor is good at, i.e. 'redux'
         + `favLanguage`: i.e. 'JavaScript, Python, Elm etc.'
         + `catchPhrase`: i.e. `Don't forget the homies`.
-    - The constructor calls the parent constructor passing it what it needs.
+    - The constructor calls the parent constructor passing it what it needs. //super() does this
     - The constructor should also initialize `specialty`, `favLanguage` and `catchPhrase` properties on the instance.
     - Instructor instances have the following methods:
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
+class Instructor extends Lambdasian {
+  constructor (obj) {
+    super(obj);
+    this.specialty = obj.specialty;
+    this.favLanguage = obj.favLanguage;
+    this.catchPhrase = obj.catchPhrase;
+  } //closes constructor 
+  demo(subject){
+    return `Today we are learning about ${subject}`
+  } //closes demo()
+  grade(student, subject){
+    return `${student.name} receives a perfect score on ${subject}`
+  } //closes grade()
+} //closes Instructor class
 
-}
+//create instructor obj
+
+const brit = new Instructor ({
+  name: "Brit",
+  age: null,
+  location: "Canada",
+  specialty: "Web Development",
+  favLanguage: "French?",
+  catchPhrase: "You can do it!"
+});
+
+//console log
+console.log("- TASK 4: ", brit.demo("Javascript"));
+console.log("- TASK 4B: ", "BloomTech is pleased to announce that ", brit.grade(kimberly, "Sprint Challenge")); //access grade() with Brit extended fn
+//and input info from object kimberly created above
+
+
+
+
 /*
   TASK 5
     - Write a Student class extending Lambdasian.
@@ -111,10 +200,38 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
+class Student extends Lambdasian {
+  constructor (obj) {
+    super(obj); //super grabs all the props from original class
+    this.previousBackground = obj.previousBackground;
+    this.className = obj.className;
+    this.favSubjects = obj.favSubjects;
+  } //closes the constructor ..add methods vv
+  listSubjects() {
+    return `Loving ${ this.favSubjects }`;
+  } //closes listSubjects()
+  PRAssignment(subject) {
+    return `${this.name} has submitted a PR for ${subject}`;
+  } //closes PRAssignment()
+  sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  } //closes sprintChallenge()
    
 }
 
+//create student object
+const rodriguez = new Student ({
+  name: "Kimberly",
+  age: 26,
+  location: "California",
+  previousBackground: "Customer Service",
+  className: "Web 52",
+  favSubjects: "HTML, CSS, JS"
+})
+
+//console.log
+console.log("- TASK 5A: ", rodriguez.PRAssignment("Javascript"));
+console.log("- TASK 5A: ", rodriguez.sprintChallenge("Prototypes & Class Syntax"));
 /*
   TASK 6
     - Write a ProjectManager class extending Instructor.
