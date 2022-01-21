@@ -63,7 +63,7 @@ class Person {
 const kim = new Person ("kim", "26");
 //console.log(kim.eat());//log obj and function from person class
 //console.log(kim.poop());
-console.log("- TASK 1: ", kim.toString());
+//console.log("- TASK 1: ", kim.toString());
 
 /*
   TASK 2
@@ -92,17 +92,21 @@ class Car {
     this.tank = this.tank + gallons; //takes the number from gallons and adds it to existing # for tank, that becomes new tank val
   } //closes fill()
   drive(distance) { //total mi = current mi + input miles(distance traveled)
+    let maxDistance = this.milesPerGallon * this.tank
+
     this.odometer = this.odometer + distance 
-    this.tank = this.tank - (this.milesPerGallon / distance)
-    if(distance > this.tank){
-      return `I ran out of fuel at ${this.odometer} miles!`
+    this.tank = this.tank - (distance / this.milesPerGallon)
+    if(maxDistance < distance){
+      this.odometer = maxDistance
+      this.tank = 0;
+      return `I ran out of fuel at ${maxDistance} miles!`
     }
   } // closes drive()
 }
 
 const familyCar = new Car ("highlander", 35);
 
-console.log("- TASK 2: ", familyCar.drive());
+console.log("- TASK 2: ", familyCar.drive(10));
 
 /*
   TASK 3
@@ -135,7 +139,7 @@ const kimberly = new Lambdasian ({
 });
 
 //console.log to see if it's working
-console.log("- TASK 3: ", kimberly.speak());
+//console.log("- TASK 3: ", kimberly.speak());
 
 /*
   TASK 4
@@ -178,8 +182,8 @@ const brit = new Instructor ({
 });
 
 //console log
-console.log("- TASK 4: ", brit.demo("Javascript"));
-console.log("- TASK 4B: ", "BloomTech is pleased to announce that ", brit.grade(kimberly, "Sprint Challenge")); //access grade() with Brit extended fn
+//console.log("- TASK 4: ", brit.demo("Javascript"));
+//console.log("- TASK 4B: ", "BloomTech is pleased to announce that ", brit.grade(kimberly, "the Sprint Challenge")); //access grade() with Brit extended fn
 //and input info from object kimberly created above
 
 
@@ -230,8 +234,8 @@ const rodriguez = new Student ({
 })
 
 //console.log
-console.log("- TASK 5A: ", rodriguez.PRAssignment("Javascript"));
-console.log("- TASK 5A: ", rodriguez.sprintChallenge("Prototypes & Class Syntax"));
+//console.log("- TASK 5A: ", rodriguez.PRAssignment("Module 4 Project"));
+//console.log("- TASK 5B: ", rodriguez.sprintChallenge("Prototypes & Class Syntax"));
 /*
   TASK 6
     - Write a ProjectManager class extending Instructor.
@@ -245,9 +249,34 @@ console.log("- TASK 5A: ", rodriguez.sprintChallenge("Prototypes & Class Syntax"
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-   
+class ProjectManager extends Instructor { 
+  constructor (obj) {
+    super(obj);
+    this.gradClassName = obj.gradClassName;
+    this.favInstructor = obj.favInstructor;
+  }//close constructor
+  standUp(slackChannel) {
+    return `${this.name} announces to ${slackChannel}, @channel standy times!`;
+  }//close standUp
+  debugsCode(studentObj, subject) {
+    return `${this.name} debugs ${studentObj.name}'s code on ${subject}`;
+  } //close debugsCode()
 }
+
+const kieran = new ProjectManager ({
+  name: "Kieran",
+  age: null,
+  location: "Home",
+  specialty: "Web Development",
+  favLanguage: "Javascript",
+  catchPhrase: "I love Javascript",
+  gradClassName: null,
+  favInstructor: "Evil cat Zev"
+})
+
+//console.log("- TASK 6A: ", kieran.standUp("web52"));
+//console.log("- TASK 6B: ", kieran.debugsCode(rodriguez,"JS Excercise: Classes"));
+
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
